@@ -5,7 +5,11 @@ import bs4 as bs
 import tgt
 import re 
 
+def find_wav_trs(directory: str):
+    
 
+# Faut voir si le nettoyage est bon, plutôt remplacer les retours à la ligne par "//"
+# Mais il existe des cas où les retours à la ligne ne sont pas traîtés (ils ont été gardés, sans traitement), ce point on peut vérifier avec Angèle pour savoir 
 def cleaning(text):
     """This function cleans the text to remove line breaks."""
     cleaned_text = re.sub("\n", " ", text)
@@ -13,8 +17,8 @@ def cleaning(text):
 
 
 def align_one_ESLO_file():
-    """This functions allows the alignement of one ESLO type file."""
-    # chargement du fichier XML et création de l'object qui est le document parsé 
+    """This functions allows the alignment of one ESLO type file."""
+    # chargement du fichier XML et création de l'objet qui est le document parsé 
     source = open("data/ESLO2_CINE_1176_C.trs", encoding="utf-8").read()
     soup = bs.BeautifulSoup(source, 'xml')
 
@@ -23,7 +27,7 @@ def align_one_ESLO_file():
 
     # creation du textgrid à partir du fichier son avec une tier intervalle "turns"
     grid = parselmouth.praat.call(sound, "To TextGrid", "turns", "")
-    # la grille devient un objet tgt > manipulable avec ses propres méthodes
+    # la grille devient un objet tgt > manipulable avec ses propres méthodes (Read, write, and manipulate Praat TextGrid files with Python)
     grid = grid.to_tgt()
 
     print(type(grid))
