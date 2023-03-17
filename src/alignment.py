@@ -5,7 +5,7 @@ import bs4 as bs
 import tgt
 import re 
 
-def find_wav_trs(directory: str):
+
     
 
 # Faut voir si le nettoyage est bon, plutôt remplacer les retours à la ligne par "//"
