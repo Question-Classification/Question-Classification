@@ -1,3 +1,4 @@
+from pathlib import Path
 import parselmouth
 import glob
 import os.path
@@ -16,14 +17,17 @@ def cleaning(text):
     return cleaned_text
 
 
-def align_one_ESLO_file():
-    """This functions allows the alignment of one ESLO type file."""
-    # chargement du fichier XML et création de l'objet qui est le document parsé 
-    source = open("data/ESLO2_CINE_1176_C.trs", encoding="utf-8").read()
+def align_one_ESLO_file(wav_path, trs_path, file_name):
+    """This functions allows the alignement of one ESLO type file."""
+    # remplacer les "\" par "/" pour les chemins
+    trs_path = re.sub(r"\\", "/", trs_path)
+    wav_path = re.sub(r"\\", "/", wav_path)
+    # chargement du fichier XML et création de l'object qui est le document parsé 
+    source = open(trs_path, encoding="utf-8").read()
     soup = bs.BeautifulSoup(source, 'xml')
 
     # ouverture du fichier son avec parselmouth
-    sound = parselmouth.Sound("data/ESLO2_CINE_1176.wav")
+    sound = parselmouth.Sound(wav_path)
 
     # creation du textgrid à partir du fichier son avec une tier intervalle "turns"
     grid = parselmouth.praat.call(sound, "To TextGrid", "turns", "")
@@ -61,12 +65,25 @@ def align_one_ESLO_file():
     print(export)
 
     # on sauvegarde l'export qui est une simple string dans un fichier .TextGrid
-    with open("data/test_grille.TextGrid", "w", encoding="utf-8") as out :
+    save_name = file_name + '.TextGrid'
+    with open(save_name, "w", encoding="utf-8") as out :
         out.write(export)
 
 
+def align_all_ESLO_files():
+    directory = "data/"
+    pathlist = Path(directory).rglob("*.wav")
+    for wav_path in pathlist:
+        if not str(wav_path).endswith("22km.wav"):
+            file_name = re.sub(".wav", "", str(wav_path))
+            trs_path = file_name + "_C.trs"
+            print(wav_path,"////", trs_path)
+            align_one_ESLO_file(str(wav_path), trs_path, file_name)
+
+
 def main():
-    align_one_ESLO_file()
+    # align_one_ESLO_file()
+    align_all_ESLO_files()
 
 
 if __name__ == "__main__":
