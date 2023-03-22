@@ -4,7 +4,7 @@ import glob
 import os.path
 import bs4 as bs
 import tgt
-import re 
+import re
 
 
 def cleaning(text):
@@ -18,9 +18,9 @@ def align_one_ESLO_file(wav_path, trs_path, file_name):
     # remplacer les "\" par "/" pour les chemins
     trs_path = re.sub(r"\\", "/", trs_path)
     wav_path = re.sub(r"\\", "/", wav_path)
-    # chargement du fichier XML et création de l'object qui est le document parsé 
+    # chargement du fichier XML et création de l'object qui est le document parsé
     source = open(trs_path, encoding="utf-8").read()
-    soup = bs.BeautifulSoup(source, 'xml')
+    soup = bs.BeautifulSoup(source, "xml")
 
     # ouverture du fichier son avec parselmouth
     sound = parselmouth.Sound(wav_path)
@@ -36,7 +36,7 @@ def align_one_ESLO_file(wav_path, trs_path, file_name):
     interval_tier = grid.get_tier_by_name("turns")
 
     # on cherche tous les "Turn" dans le XML pour avoir la longueur des tours de parole à traiter
-    all_turns = soup.findAll('Turn')
+    all_turns = soup.findAll("Turn")
 
     # pour chaque tour de parole dans le XML
     for i in range(len(all_turns)):
@@ -51,7 +51,9 @@ def align_one_ESLO_file(wav_path, trs_path, file_name):
         print("End time :", end_time, type(end_time))
 
         # création d'un intervalle pour chaque tour avec le tps de début, fin et le texte nettoyé
-        interval = tgt.core.Interval(float(start_time),float(end_time),cleaning(text))
+        interval = tgt.core.Interval(
+            float(start_time), float(end_time), cleaning(text)
+        )
         # on ajoute l'intervalle à la tier (IntervalTier)
         interval_tier.add_interval(interval)
         # grille.tgt.io.export_to_long_textgrid(grille)
@@ -61,8 +63,8 @@ def align_one_ESLO_file(wav_path, trs_path, file_name):
     print(export)
 
     # on sauvegarde l'export qui est une simple string dans un fichier .TextGrid
-    save_name = file_name + '.TextGrid'
-    with open(save_name, "w", encoding="utf-8") as out :
+    save_name = file_name + ".TextGrid"
+    with open(save_name, "w", encoding="utf-8") as out:
         out.write(export)
 
 
@@ -73,7 +75,7 @@ def align_all_ESLO_files():
         if not str(wav_path).endswith("22km.wav"):
             file_name = re.sub(".wav", "", str(wav_path))
             trs_path = file_name + "_C.trs"
-            print(wav_path,"////", trs_path)
+            print(wav_path, "////", trs_path)
             align_one_ESLO_file(str(wav_path), trs_path, file_name)
 
 
