@@ -11,4 +11,4 @@ Install the required dependencies from the ```requirements.txt``` file in a ".ve
   - [x] ESLO 2 REPAS
  
 * ACSYNT : 
-  - [ ] Entretiens guidés 
+  - [x] Entretiens guidés 
