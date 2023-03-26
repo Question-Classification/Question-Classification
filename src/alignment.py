@@ -18,7 +18,7 @@ def cleaning(text):
 
 
 def align_one_ESLO_file(wav_path, trs_path, file_name):
-    """This functions allows the alignement of one ESLO type file."""
+    """This functions allows the alignment of one ESLO type file."""
     # remplacer les "\" par "/" pour les chemins
     trs_path = re.sub(r"\\", "/", trs_path)
     wav_path = re.sub(r"\\", "/", wav_path)
