@@ -72,7 +72,7 @@ def align_one_ESLO_file(wav_path, trs_path, file_name):
 
 
 def align_all_ESLO_files():
-    directory = "data/"
+    directory = "data/ESLO/"
     pathlist = Path(directory).rglob("*.wav")
     for wav_path in pathlist:
         if not str(wav_path).endswith("22km.wav"):
