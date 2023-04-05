@@ -5,3 +5,4 @@ numpy==1.24.2
 praat-parselmouth==0.4.3
 soupsieve==2.4
 tgt==1.4.4
+openpyxl==3.1.2
