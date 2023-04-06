@@ -3,6 +3,10 @@ from pathlib import Path
 import re
 import bs4 as bs
 
+# >>>> creer final frame avec question, contexte droit, contexte gauche, categorie, temps de fin, temps de début, nom de fichier
+# je peux extraire les temps en même temps que get Text de la question
+# avec cette final frame on pourra aligner en adaptant le script que j'ai déjà fait
+# et extraire les données de la frame
 
 # but du code : préparer l'annotation manuelle pour pouvoir trouver les
 # questions à réaligner sous praat par la suite
@@ -21,6 +25,7 @@ import bs4 as bs
 
 # ça ne va marcher que pour les questions eslo (acsynt pas la même manière de parser)
 def retrieve_file_information(row):
+    # on récupère les data du fichiers des anciens étudiants et on nettoie
     question_to_keep = row["question"]
     left_question_to_keep = row["previous_5_turn"]
     right_question_to_keep = row["next_5_turn"]
@@ -39,7 +44,7 @@ def retrieve_file_information(row):
         r"\s+", " ", clean_right_question_to_keep
     )
     print("question", clean_question_to_keep)
-    # go through all trs files
+    # go through all trs files in ESLO
     directory = "data/ESLO/"
     pathlist = Path(directory).rglob("*.trs")
     for trs_path in pathlist:
@@ -50,9 +55,9 @@ def retrieve_file_information(row):
         # on cherche tous les "Turn" dans le XML pour avoir la longueur des tours de parole à traiter
         all_turns = soup.findAll("Turn")
         for i in range(len(all_turns) - 5):
-            # on récupère le texte de ce tour de parole
+            # on récupère le texte de ce tour de parole et les contextes dans les trs, nettoyage
             text = all_turns[i].getText()
-            left_list = all_turns[max(0, i - 5) : i]  # .getText()
+            left_list = all_turns[max(0, i - 5) : i]
             left_text_list = []
             right_text_list = []
             for elt_left in left_list:
@@ -61,7 +66,7 @@ def retrieve_file_information(row):
                 clean_right_text_to_add = clean_left_text_to_add.strip(r"\s")
                 left_text_list.append(clean_left_text_to_add)
 
-            right_list = all_turns[i + 1 : i + 6]  # getText()
+            right_list = all_turns[i + 1 : i + 6]
             for elt_right in right_list:
                 right_text_to_add = elt_right.getText()
                 clean_right_text_to_add = re.sub(
@@ -91,6 +96,7 @@ def retrieve_file_information(row):
             #     end="$$$$$$$$$\n",
             # )
 
+            # récupération et nettoyage contextes dans les fichiers trs
             left_context = "|".join(left_text_list)
             clean_left_context = re.sub(r"\s+", " ", left_context)
             right_context = "|".join(right_text_list)
