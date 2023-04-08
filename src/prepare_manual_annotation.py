@@ -3,6 +3,9 @@ from pathlib import Path
 import re
 import bs4 as bs
 from unidecode import unidecode
+from tqdm import tqdm
+
+tqdm.pandas()
 
 # >>>> creer final frame avec question, contexte droit, contexte gauche, categorie, temps de fin, temps de début, nom de fichier
 # je peux extraire les temps en même temps que get Text de la question
@@ -28,6 +31,7 @@ ROOT_DATA_DIR = "../data/"
 # ça ne va marcher que pour les questions eslo (acsynt pas la même manière de parser)
 def retrieve_file_information(row):
     # on récupère les data du fichiers des anciens étudiants et on nettoie
+
     question_to_keep = row["question"]
     left_question_to_keep = row["previous_5_turn"]
     right_question_to_keep = row["next_5_turn"]
@@ -145,7 +149,7 @@ def main():
         ROOT_DATA_DIR+"all_questions_to_keep.xlsx",
     )
 
-    df["file_name"] = df.apply(
+    df["file_name"] = df.progress_apply(
         lambda row: retrieve_file_information(row), axis=1
     )
 
