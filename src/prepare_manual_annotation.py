@@ -2,6 +2,7 @@ import pandas as pd
 from pathlib import Path
 import re
 import bs4 as bs
+from unidecode import unidecode
 
 # >>>> creer final frame avec question, contexte droit, contexte gauche, categorie, temps de fin, temps de début, nom de fichier
 # je peux extraire les temps en même temps que get Text de la question
@@ -22,6 +23,7 @@ import bs4 as bs
 # (en parcourant chaque trs, si c'est la bonne question mais qu'il y a aurte
 # chose dans le tour, on ajoute column "à checker/realigner praat")
 
+ROOT_DATA_DIR = "../data/"
 
 # ça ne va marcher que pour les questions eslo (acsynt pas la même manière de parser)
 def retrieve_file_information(row):
@@ -29,23 +31,26 @@ def retrieve_file_information(row):
     question_to_keep = row["question"]
     left_question_to_keep = row["previous_5_turn"]
     right_question_to_keep = row["next_5_turn"]
-    clean_question_to_keep = re.sub(r"#?spk\d(\s: )?", "", question_to_keep)
+
+    regex = re.compile(r"#?spk\d(\s: )?")
+
+    clean_question_to_keep = re.sub(regex, "", question_to_keep)
     clean_question_to_keep.strip(r"\s+")
     clean_left_question_to_keep = re.sub(
-        r"#?spk\d(\s: )?|//", "", left_question_to_keep
+        regex, "", str(left_question_to_keep)
     )
     clean_left_question_to_keep = re.sub(
         r"\s+", " ", clean_left_question_to_keep
     )
     clean_right_question_to_keep = re.sub(
-        r"#?spk\d(\s: )?|//", "", right_question_to_keep
+        regex, "", right_question_to_keep
     )
     clean_right_question_to_keep = re.sub(
         r"\s+", " ", clean_right_question_to_keep
     )
-    print("question", clean_question_to_keep)
+
     # go through all trs files in ESLO
-    directory = "data/ESLO/"
+    directory = ROOT_DATA_DIR+"ESLO/"
     pathlist = Path(directory).rglob("*.trs")
     for trs_path in pathlist:
         trs_path = re.sub(r"\\", "/", str(trs_path))
@@ -75,7 +80,7 @@ def retrieve_file_information(row):
                 clean_right_text_to_add = clean_right_text_to_add.strip(r"\s")
                 right_text_list.append(clean_right_text_to_add)
 
-            clean_text = re.sub(r"\n+", "", text)
+            clean_text = re.sub(r"\n+", " ", text)
 
             # print(
             #     "left_question",
@@ -103,20 +108,18 @@ def retrieve_file_information(row):
             clean_right_context = re.sub(r"\s+", " ", right_context)
 
             # se baser uniquement sur la colonne question
-            if re.match(clean_question_to_keep, clean_text):
+            if re.match(unidecode(clean_question_to_keep), unidecode(clean_text)):
                 print("--- même question trouvée")
 
-                # print(clean_left_question_to_keep, clean_left_context)
-                # print(clean_right_question_to_keep, clean_right_context)
-
                 # se baser sur les 5 tours avant*
-                if re.search(clean_left_question_to_keep, clean_left_context):
+                if re.search(unidecode(clean_left_question_to_keep), unidecode(clean_left_context)):
                     print("--- même question et même contexte gauche ")
 
                     # se baser sur les 5 tours après
                     if re.search(
-                        clean_right_question_to_keep, clean_right_context
+                        unidecode(clean_right_question_to_keep), unidecode(clean_right_context)
                     ):
+
                         print(
                             "--- même question, même contexte gauche et même contexte droit\n -------- OK -- file found",
                             trs_path,
@@ -134,21 +137,19 @@ def retrieve_file_information(row):
                             "trs contexte droit",
                             clean_right_context,
                         )
+
                         return trs_path
 
-
 def main():
-    df = pd.read_csv(
-        "data/all_questions_to_keep.xlsx - Feuille 1.csv",
-        sep=",",
-        encoding="utf-8",
+    df = pd.read_excel(
+        ROOT_DATA_DIR+"all_questions_to_keep.xlsx",
     )
-    print(df.head())
+
     df["file_name"] = df.apply(
         lambda row: retrieve_file_information(row), axis=1
     )
-    df.to_csv("all_questions_to_keep_filenames.csv", sep=";", encoding="utf-8")
 
+    df.to_csv(ROOT_DATA_DIR+"all_questions_to_keep_filenames.csv", sep=";", encoding="utf-8")
 
 if __name__ == "__main__":
     main()
