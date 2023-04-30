@@ -98,9 +98,6 @@ def extract_questions(tg_path,wav_path):
 
 	pitch = extract_features("pitch", sound, prepared) # extraction du pitch, harmonicité, formants, intensité pour les questions préparées)
 
-	for p in pitch:
-		print(parselmouth.as_array(p))
-
 
 def main():
 	tg = Path(DIRECTORY).rglob("*.TextGrid")
