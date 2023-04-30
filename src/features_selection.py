@@ -57,24 +57,28 @@ def get_spectrogram(sound):
 def get_sound_snippet(sound, start_time, end_time):
 	return sound.extract_part(start_time, end_time)
 
-def extract_features(sound, questions):
+def extract_features(feature, sound, questions):
 
-	pitch = harm = form = intensity = []
+	features = []
 	for question in questions:
 		snippet = get_sound_snippet(sound, question[0], question[1])
 
-		pitch.append(get_pitch(snippet))
-		harm.append(get_harmonicity(snippet))
-		form.append(get_formants(snippet))
-		intensity.append(get_intensity(snippet))
+		if feature == "pitch":
+			features.append(get_pitch(snippet))
+		elif feature == "harmonicity":
+			features.append(get_harmonicity(snippet))
+		elif feature == "formant":
+			features.append(get_formants(snippet))
+		elif feature == "intensity":
+			features.append(get_intensity(snippet))
+		else:
+			return "Not an available feature"
 
 		# times = pitch.ts() # analysis window time instants
 
-	return pitch, harm, form, intensity
+	return features
 
 def extract_questions(tg_path,wav_path):
-
-	print(Path(tg_path).stem)
 
 	grid = read_tg(tg_path)
 	sound = read_wav(wav_path)
@@ -90,7 +94,13 @@ def extract_questions(tg_path,wav_path):
 	if len(all_questions) < 1:
 		return None # skip files with no annotations
 
-	pitch, harm, form, intensity = extract_features(sound, prepared) # extraction du pitch, harmonicité, formants, intensité pour les questions préparéesà)
+	print(Path(tg_path).stem)
+
+	pitch = extract_features("pitch", sound, prepared) # extraction du pitch, harmonicité, formants, intensité pour les questions préparées)
+
+	for p in pitch:
+		print(parselmouth.as_array(p))
+
 
 def main():
 	tg = Path(DIRECTORY).rglob("*.TextGrid")
