@@ -1,5 +1,7 @@
-venv/**
 data/**
 .venv/**
-.DS_Store
-.ipynb_checkpoints
+clean_data_for_extraction/**
+reformat_one_tier/**
+repared_data_xmax/**
+output_results/**
+test_programs/**

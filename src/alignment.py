@@ -5,7 +5,7 @@ import os.path
 import bs4 as bs
 import tgt
 import re
-
+# tester sur fichier INTPERS 401
 
 # Faut voir si le nettoyage est bon, plutôt remplacer les retours à la ligne par "//"
 # Mais il existe des cas où les retours à la ligne ne sont pas traîtés

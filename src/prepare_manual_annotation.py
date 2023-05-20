@@ -7,24 +7,11 @@ from tqdm import tqdm
 
 tqdm.pandas()
 
-# >>>> creer final frame avec question, contexte droit, contexte gauche, categorie, temps de fin, temps de début, nom de fichier
-# je peux extraire les temps en même temps que get Text de la question
-# avec cette final frame on pourra aligner en adaptant le script que j'ai déjà fait
-# et extraire les données de la frame
-
 # but du code : préparer l'annotation manuelle pour pouvoir trouver les
 # questions à réaligner sous praat par la suite
 # le pb est que les temps qu'on a correspondent à l'intégralité du tour
 # et pas uniquement aux questions qui sont dans ce tour de parole
 
-# importer le fichier to keep
-# retrouver l'information du nom du fichier grace aux trois colonnes contenant
-# les data (en parcourant chaque trs)
-# ajouter l'information du fichier dans une nouvelle colonne
-# exporter les résultats sous forme d'un csv avec la nouvelle colonne
-# > trouver un moyen de checker quelles questions sont impactées
-# (en parcourant chaque trs, si c'est la bonne question mais qu'il y a aurte
-# chose dans le tour, on ajoute column "à checker/realigner praat")
 
 ROOT_DATA_DIR = "../data/"
 
