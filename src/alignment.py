@@ -5,7 +5,6 @@ import os.path
 import bs4 as bs
 import tgt
 import re
-# tester sur fichier INTPERS 401
 
 
 def cleaning(text):
@@ -16,7 +15,6 @@ def cleaning(text):
 
 def align_one_ESLO_file(wav_path, trs_path, file_name):
     """This functions allows the alignment of one ESLO type file."""
-    # remplacer les "\" par "/" pour les chemins
     trs_path = re.sub(r"\\", "/", trs_path)
     wav_path = re.sub(r"\\", "/", wav_path)
     # chargement du fichier XML et création de l'object qui est le document parsé
