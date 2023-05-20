@@ -11,8 +11,7 @@ from unidecode import unidecode
 from pathlib import Path
 from tqdm import tqdm
 
-# Faut voir si le nettoyage est bon, plutôt remplacer les retours à la ligne par "//"
-# Mais il existe des cas où les retours à la ligne ne sont pas traîtés (ils ont été gardés, sans traitement), ce point on peut vérifier avec Angèle pour savoir 
+
 def cleaning(text):
     """This function cleans the text to remove line breaks."""
 
