@@ -1,4 +1,6 @@
-# Questions-Classification
+# Prepared vs. spontaneous question classification
+
+This repository contains the work (being) done by students of Paris Nanterre University's NLP Masters Degree for the task of prepared vs. spontaneous question classification.
 
 Install the required dependencies from the ```requirements.txt``` file in a ".venv" virtual environment. 
 
@@ -21,3 +23,4 @@ All this programs were used to transform a TextGrid file with n tiers to a TextG
 * ```reformat_5tiersFile_to1tier.py```
 ### **Extraction program :**
 * ```extraction_features.py``` : the program used to extract prosodic features
+
