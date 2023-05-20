@@ -21,8 +21,3 @@ All this programs were used to transform a TextGrid file with n tiers to a TextG
 * ```reformat_5tiersFile_to1tier.py```
 ### **Extraction program :**
 * ```extraction_features.py``` : the program used to extract prosodic features
-
-**A faire :**
-- [ ] Finir ReadMe propre
-- [x] Fichier requirements.txt propre
-- [x] Src propre
