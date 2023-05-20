@@ -1,4 +1,4 @@
-# Question-Classification
+# Questions-Classification
 
 Install the required dependencies from the ```requirements.txt``` file in a ".venv" virtual environment. 
 
