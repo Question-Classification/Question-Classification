@@ -14,13 +14,16 @@ Install the required dependencies from the ```requirements.txt``` file in a ".ve
 * ```alignement.py``` : try to align all ESLO files (not used)
 * ```prepare_manual_annotation.py``` : (not used) try to create a new column in all_questions_to_keep.csv containing the name of the file corresponding to each question
 * ```tg_alignment.py``` : (used to prepare manual annotation) the program used to prepare manual annotation
+* ```merge_tg.py``` : (used to create hybride TextGrid files for the ACSYNT corpora, with Webmaus + EasyAlign TextGrids) used to create exploitable ACSYNT TextGrid files
 
 ### **Prepare data for features extraction :**
-All this programs were used to transform a TextGrid file with n tiers to a TextGrid file with only a single tier
+These programs were used to transform a TextGrid file with and tiers to a TextGrid file with only a single tier
 * ```reformat_2tiersFile_to1tier.py```  
 * ```reformat_3tiersFile_to1tier.py```  
 * ```reformat_4tiersFile_to1tier.py``` 
 * ```reformat_5tiersFile_to1tier.py```
+* ```normalize.py``` : used to normalize "mean_syll_duration (ms)" and "mean_syll_duration_last_3_syll (ms)" values
 ### **Extraction program :**
 * ```extraction_features.py``` : the program used to extract prosodic features
-
+### **Dataset exploration :**
+* ```stats.py```: used to compute stats (number of questions, means for each feature, etc.) for the entire final corpora (ESLO + ACSYNT)
