@@ -21,9 +21,10 @@ These programs were used to transform a TextGrid file with and tiers to a TextGr
 * ```reformat_2tiersFile_to1tier.py```  
 * ```reformat_3tiersFile_to1tier.py```  
 * ```reformat_4tiersFile_to1tier.py``` 
-* ```reformat_5tiersFile_to1tier.py```
-* ```normalize.py``` : used to normalize "mean_syll_duration (ms)" and "mean_syll_duration_last_3_syll (ms)" values
+* ```reformat_5tiersFile_to1tier.py``` 
 ### **Extraction program :**
 * ```extraction_features.py``` : the program used to extract prosodic features
+### **Normalize values :**
+* ```normalize.py``` : used to normalize "mean_syll_duration (ms)" and "mean_syll_duration_last_3_syll (ms)" values
 ### **Dataset exploration :**
 * ```stats.py```: used to compute stats (number of questions, means for each feature, etc.) for the entire final corpora (ESLO + ACSYNT)
