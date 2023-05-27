@@ -13,8 +13,9 @@ Install the required dependencies from the ```requirements.txt``` file in a ".ve
 * ```prepare_manual_annotation_acsynt.py``` : (not used)
 * ```alignement.py``` : try to align all ESLO files (not used)
 * ```prepare_manual_annotation.py``` : (not used) try to create a new column in all_questions_to_keep.csv containing the name of the file corresponding to each question
-* ```tg_alignment.py``` : (used to prepare manual annotation) the program used to prepare manual annotation
-* ```merge_tg.py``` : (used to create hybride TextGrid files for the ACSYNT corpora, with Webmaus + EasyAlign TextGrids) used to create exploitable ACSYNT TextGrid files
+* ```trs_to_tg.pl``` : (used to prepare manual annotation) the program used to convert from Transcriber Transcript (.trs) to Praat TextGrid (.TextGrid)
+* ```tg_alignment.py``` : (used to prepare manual annotation) the program used to prepare manual annotation for ESLO corpora, it calls ```trs_to_tg.pl``` when aligning the ESLO corpora
+* ```merge_tg.py``` : (used to create hybrid TextGrid files for the ACSYNT corpora, with Webmaus + EasyAlign TextGrids) used to create exploitable ACSYNT TextGrid files
 
 ### **Prepare data for features extraction :**
 These programs were used to transform a TextGrid file with and tiers to a TextGrid file with only a single tier
