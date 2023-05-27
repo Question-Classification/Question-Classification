@@ -18,7 +18,7 @@ Install the required dependencies from the ```requirements.txt``` file in a ".ve
 * ```merge_tg.py``` : (used to create hybrid TextGrid files for the ACSYNT corpora, with Webmaus + EasyAlign TextGrids) used to create exploitable ACSYNT TextGrid files
 
 ### **Prepare data for features extraction :**
-These programs were used to transform a TextGrid file with and tiers to a TextGrid file with only a single tier
+These programs were used to transform a TextGrid file with multiple tiers to a TextGrid file with only a single tier
 * ```reformat_2tiersFile_to1tier.py```  
 * ```reformat_3tiersFile_to1tier.py```  
 * ```reformat_4tiersFile_to1tier.py``` 
